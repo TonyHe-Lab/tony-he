@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>OPC · AI 时代的一人公司</title>
+<style>body{margin:0;font-family:system-ui,"PingFang SC",sans-serif;background:#F2F4F7;color:#111318}main{max-width:900px;margin:0 auto;padding:48px 24px}h1{font-size:52px;line-height:1.1}h1 span{color:#E4572E}p{font-size:19px;line-height:1.7;color:#3d4552}video{width:100%;background:#000}.box{border:2px solid #cbd2dd;background:#fff;padding:18px;margin:14px 0}.box b{color:#E4572E;letter-spacing:4px}#status{color:#5b6472}</style>
+</head><body><main>
+<p>ONE PERSON COMPANY</p>
+<h1>一个人，<span>正在变大。</span></h1>
+<video id="film" controls preload="metadata" poster=""></video>
+<p id="status">正在加载成片…</p>
+<p>AI 时代，一人公司的未来不在规模里。过去，一个人等于所有事；AI 之后，你做判断，AI 做执行，边界被推开，瓶颈不再是人数。</p>
+<div class="box"><b>定位</b><p>只做一个细分。窄，才记得住。</p></div>
+<div class="box"><b>产品化</b><p>服务变成产品。范围、产出、交接先定好。</p></div>
+<div class="box"><b>自动化</b><p>重复的交给系统。人只做判断。</p></div>
+<div class="box"><b>订阅</b><p>收入变成持续。不是接一单，算一单。</p></div>
+<h2>卖时间一次，卖方法多次。</h2>
+<p>未来不是大公司变小，而是一个人变大。</p>
+<script>
+(async () => {
+  const status = document.getElementById('status');
+  try {
+    const res = await fetch('film-a-v3.mp4.b64');
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const b64 = (await res.text()).replace(/\s+/g, '');
+    const bin = atob(b64);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    const url = URL.createObjectURL(new Blob([bytes], { type: 'video/mp4' }));
+    document.getElementById('film').src = url;
+    status.textContent = '成片已加载（30 秒，1920×1080）。';
+  } catch (e) {
+    status.textContent = '成片加载失败：' + e.message;
+  }
+})();
+</script>
+</main></body></html>
